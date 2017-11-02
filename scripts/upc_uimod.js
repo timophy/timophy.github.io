@@ -1,10 +1,19 @@
-
+//stage 1
 var uimod_clipmakerRate = 0;
 var uimod_avgSales = 0;
 var uimod_unsoldClips = 0;
+//stage 2
+var uimod_powerConsumptionRate = 0;
+var uimod_powerProductionRate = 0;
+var uimod_storedPower = 0;
+var uimod_maxStorage = 0;
+var uimod_acquiredMatterDisplay = 0;
+var uimod_nanoWire = 0;
+var uimod_performance = 0;
+
 
 function uimod_ready() {
-	displayMessage("<span style='color:green'>[Universal Paperclip UI Mod]</span> V2 by Timophy")
+	displayMessage("<span style='color:green'>[Universal Paperclip UI Mod]</span> V3 (Nov 2nd, 2017) by Timophy")
 	displayMessage("<span style='color:green'>[Universal Paperclip UI Mod]</span> Loaded")
 
 	//every 1 second
@@ -34,6 +43,58 @@ function uimod_ready() {
 		} else {
 			document.getElementById('avgSales').style.backgroundColor = "rgb(255, 30, 30)"; //dark red
 			document.getElementById('avgSales').style.color = "rgb(255, 255, 255)";
+		}
+
+
+
+		//get current values - 2nd stage
+		uimod_powerConsumptionRate = parseInt(document.getElementById('powerConsumptionRate').innerHTML.replace(/,/g , ""));
+		uimod_powerProductionRate = parseInt(document.getElementById('powerProductionRate').innerHTML.replace(/,/g , ""));
+		uimod_storedPower = parseInt(document.getElementById('storedPower').innerHTML.replace(/,/g , ""));
+		uimod_maxStorage = parseInt(document.getElementById('maxStorage').innerHTML.replace(/,/g , ""));
+		uimod_maxStorage = parseInt(document.getElementById('maxStorage').innerHTML.replace(/,/g , ""));
+		uimod_acquiredMatterDisplay = parseInt(document.getElementById('acquiredMatterDisplay').innerHTML.replace(/,/g , ""));
+		uimod_nanoWire = parseInt(document.getElementById('nanoWire').innerHTML.replace(/,/g , ""));
+		uimod_performance = parseInt(document.getElementById('performance').innerHTML.replace(/,/g , ""));
+
+		//highlight power consumtion
+		if((uimod_powerProductionRate / uimod_powerConsumptionRate) > 1.25) {
+			document.getElementById('powerProductionRate').style.backgroundColor = "rgb(150, 255, 150)"; //green
+		} else if((uimod_powerProductionRate / uimod_powerConsumptionRate) >= 1) {
+			document.getElementById('powerProductionRate').style.backgroundColor = "rgb(210, 255, 210)"; //light green
+		} else {
+			document.getElementById('powerProductionRate').style.backgroundColor = "rgb(255, 150, 150)"; //red
+		}
+
+		//highlight power storage
+		if((uimod_storedPower / uimod_maxStorage) >= 0.9) {
+			document.getElementById('storedPower').style.backgroundColor = "rgb(150, 255, 150)"; //green
+		} else if((uimod_storedPower / uimod_maxStorage) >= 0.5) {
+			document.getElementById('storedPower').style.backgroundColor = "rgb(210, 255, 210)"; //light green
+		} else if((uimod_storedPower / uimod_maxStorage) >= 0.1) {
+			document.getElementById('storedPower').style.backgroundColor = "rgb(255, 210, 210)"; //light red
+		} else {
+			document.getElementById('storedPower').style.backgroundColor = "rgb(255, 150, 150)"; //red
+		}
+
+		//highlight 0 resources
+		if(uimod_acquiredMatterDisplay == 0) {
+			document.getElementById('acquiredMatterDisplay').style.backgroundColor = "rgb(255, 150, 150)"; //red
+		} else {
+			document.getElementById('acquiredMatterDisplay').style.backgroundColor = "rgb(150, 255, 150)"; //green
+		}
+
+		if(uimod_nanoWire == 0) {
+			document.getElementById('nanoWire').style.backgroundColor = "rgb(255, 150, 150)"; //red
+		} else {
+			document.getElementById('nanoWire').style.backgroundColor = "rgb(150, 255, 150)"; //green
+		}
+
+		//highlight performance
+		if(uimod_performance < 100) {
+			document.getElementById('performance').style.backgroundColor = "rgb(255, 150, 150)"; //red
+		} else {
+			document.getElementById('performance').style.backgroundColor = "rgb(150, 255, 150)"; //green
 		}
 
 	}, 1000);
